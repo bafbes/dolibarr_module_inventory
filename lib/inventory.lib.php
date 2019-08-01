@@ -93,8 +93,8 @@ function inventorySelectProducts(&$PDOdb, &$inventory)
 		$Tab[$res->rowid] = (float)DOL_VERSION >= 7 ? $res->ref : $res->label;
 	}
 	print '&nbsp;&nbsp;&nbsp;';
-	print 'Entrepôt : '.$form::selectarray('fk_warehouse', $Tab);
-	
+    print '<input type="hidden" name="fk_warehouse" id="fk_warehouse" value="'.$TInventorydet->fk_warehouse.'" />';
+
 	$select_html = ob_get_clean();
 	
 	/*
