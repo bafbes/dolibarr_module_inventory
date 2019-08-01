@@ -273,36 +273,36 @@
 					<td align="center" style="background-color: #e8e8ff;"><?php echo $row['lot']; ?></td>
 				<?php } ?>
 				<?php if ($view['can_validate'] == 1) { ?>
-					<td align="center" style="background-color: #e8e8ff;"><?php echo $row['qty_stock']; ?></td>
-					<td align="right" style="background-color: #e8e8ff;"><?php echo price( $row['pmp_stock']); ?></td>
-					<td align="right" style="background-color: #e8e8ff;"><?php echo price( $row['pa_stock']); ?></td>
-	               <?php
+<!--					<td align="center" style="background-color: #e8e8ff;"><?php /*echo $row['qty_stock']; */?></td>
+					<td align="right" style="background-color: #e8e8ff;"><?php /*echo price( $row['pmp_stock']); */?></td>
+					<td align="right" style="background-color: #e8e8ff;"><?php /*echo price( $row['pa_stock']); */?></td>
+-->	               <?php
 	                 if(!empty($conf->global->INVENTORY_USE_MIN_PA_IF_NO_LAST_PA)){
 	                 	echo '<td align="right" style="background-color: #e8e8ff;">'.price($row['current_pa_stock']).'</td>';
 						 $total_current_pa+=$row['current_pa_stock'];
-	                 }   
-	                    
+	                 }
+
 	               ?>
 				<?php } ?>
 				<td align="center"><?php echo $row['qty']; ?>&nbsp;&nbsp;<span id="qty_view_<?php echo $row['k']; ?>"><?php echo $row['qty_view']; ?></span>
-                    <input type="hidden" name="det_id_<?php echo $row['k']; ?>" value="<?php echo $row['id']; ?>" /> 
+                    <input type="hidden" name="det_id_<?php echo $row['k']; ?>" value="<?php echo $row['id']; ?>" />
                 </td>
                 <?php if ($view['can_validate'] == 1) { ?>
-                    <td align="right"><?php echo price($row['pmp_actual']); ?></td>
+<!--                    <td align="right">--><?php //echo price($row['pmp_actual']); ?><!--</td>-->
                     <?php
                     if(!empty($user->rights->inventory->changePMP)) {
-                    	echo '<td align="right">'.$row['pmp_new'].'</td>';	
+//                    	echo '<td align="right">'.$row['pmp_new'].'</td>';
 					}
                     ?>
-                    <td align="right"><?php echo price($row['pa_actual']); ?></td>
+<!--                    <td align="right">--><?php //echo price($row['pa_actual']); ?><!--</td>-->
 		               <?php
 		                 if(!empty($conf->global->INVENTORY_USE_MIN_PA_IF_NO_LAST_PA)){
-		                 	echo '<td align="right">'.price($row['current_pa_actual']).'</td>';
+//		                 	echo '<td align="right">'.price($row['current_pa_actual']).'</td>';
 							 $total_current_pa_actual+=$row['current_pa_actual'];
 		                 }   
 		                    
 		               ?>
-                    <td align="center"><?php echo $row['qty_regulated']; ?></td>
+<!--                    <td align="center">--><?php //echo $row['qty_regulated']; ?><!--</td>-->
 				<?php } ?>
 				<?php if ($view['is_already_validate'] != 1) { ?>
 					<td align="center" width="20%"><?php echo $row['action']; ?></td>
@@ -312,7 +312,7 @@
 		
 		<?php } 
 		
-		_footerList($view,$total_pmp,$total_pmp_actual,$total_pa,$total_pa_actual, $total_current_pa,$total_current_pa_actual);
+//		_footerList($view,$total_pmp,$total_pmp_actual,$total_pa,$total_pa_actual, $total_current_pa,$total_current_pa_actual);
 		?>
 	
 	  
@@ -322,19 +322,19 @@
 	<?php if ($view['is_already_validate'] != 1) { ?>
 		<div class="tabsAction" style="height:30px;">
 			<?php if ($view['mode'] == 'view') { ?>
-				<a href="<?php echo $view['url']; ?>?id=<?php echo $inventoryTPL['id']; ?>&action=printDoc" class="butAction">Imprimer</a>
-				<a href="<?php echo $view['url']; ?>?id=<?php echo $inventoryTPL['id']; ?>&action=exportCSV" class="butAction">Export CSV</a>
-				<a href="<?php echo $view['url']; ?>?id=<?php echo $inventoryTPL['id']; ?>&action=edit" class="butAction">Modifier</a>
+<!--				<a href="<?php /*echo $view['url']; */?>?id=<?php /*echo $inventoryTPL['id']; */?>&action=printDoc" class="butAction">Imprimer</a>
+				<a href="<?php /*echo $view['url']; */?>?id=<?php /*echo $inventoryTPL['id']; */?>&action=exportCSV" class="butAction">Export CSV</a>
+-->				<a href="<?php echo $view['url']; ?>?id=<?php echo $inventoryTPL['id']; ?>&action=edit" class="butAction">Modifier</a>
 				<?php 
-				 if(!empty($user->rights->inventory->changePMP)) {
+/*				 if(!empty($user->rights->inventory->changePMP)) {
 				 	echo '<a href="javascript:;" onclick="javascript:if (!confirm(\'Confirmez-vous l\\\'application du nouveau PMP ?\')) return false; else document.location.href=\''.$view['url']
 				 			.'?id='.$inventoryTPL['id']
 				 			.'&action=changePMP&token='.$view['token'].'\'; " class="butAction">Appliquer le PMP</a>';
 				 }
 				
-				if ($view['can_validate'] == 1) { ?>
-					<a href="javascript:;" onclick="javascript:if (!confirm('Confirmez-vous la régulation ?')) return false; else document.location.href='<?php echo $view['url']; ?>?id=<?php echo $inventoryTPL['id']; ?>&action=regulate&token=<?php echo $view['token']; ?>'; " class="butAction">Réguler le stock</a>
-				<?php } ?>
+				if ($view['can_validate'] == 1) { */?><!--
+					<a href="javascript:;" onclick="javascript:if (!confirm('Confirmez-vous la régulation ?')) return false; else document.location.href='<?php /*echo $view['url']; */?>?id=<?php /*echo $inventoryTPL['id']; */?>&action=regulate&token=<?php /*echo $view['token']; */?>'; " class="butAction">Réguler le stock</a>
+				--><?php /*}*/ ?>
 			<?php } ?>
 			<?php if ($view['mode'] == 'edit') { ?>
 				<input name="back" type="button" class="butAction" value="Quitter la saisie" onclick="document.location='?id=<?php echo $inventoryTPL['id']; ?>&action=view';" />
