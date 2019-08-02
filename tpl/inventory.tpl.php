@@ -211,7 +211,7 @@
 	                    
 	                }).done(function(data) {
 		                console.log(data);
-	                	document.location = '?id='+<?php echo $inventoryTPL['id']; ?>+'&action=edit';
+	                	document.location = '?id='+'<?php echo $inventoryTPL['id']; ?>'+'&action=edit';
 	                });
 					
 	           	}
