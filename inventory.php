@@ -91,7 +91,7 @@ function _action()
 			$TChildWarehouses = array($fk_warehouse);
 			if(method_exists($e, 'get_children_warehouses')) $e->get_children_warehouses($fk_warehouse, $TChildWarehouses);
 
-			$sql = 'SELECT p.rowid AS fk_product, sm.fk_entrepot, SUM(sm.value) AS qty';
+/*			$sql = 'SELECT p.rowid AS fk_product, sm.fk_entrepot, SUM(sm.value) AS qty';
 			$sql.= ' FROM '.MAIN_DB_PREFIX.'product p';
 			$sql.= ' LEFT JOIN '.MAIN_DB_PREFIX.'product_stock ps ON (p.rowid = ps.fk_product)';
 			$sql.= ' INNER JOIN '.MAIN_DB_PREFIX.'stock_mouvement sm ON (p.rowid = sm.fk_product)';
@@ -122,7 +122,7 @@ function _action()
                 if($inventoryWithBatchDetail && $product->hasbatch()) $inventory->add_batch($PDOdb, $row->fk_product, $row->fk_entrepot, $inventory->get_date('date_inventory', 'Y-m-d'), GETPOST('includeWithStockPMP')!='' );
 			}
 			
-			$inventory->save($PDOdb);
+			$inventory->save($PDOdb);*/
 			
 			header('Location: '.dol_buildpath('inventory/inventory.php?id='.$inventory->getId().'&action=edit', 1));
 		
