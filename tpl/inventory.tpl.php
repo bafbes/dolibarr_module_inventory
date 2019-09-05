@@ -331,10 +331,10 @@
 				 			.'?id='.$inventoryTPL['id']
 				 			.'&action=changePMP&token='.$view['token'].'\'; " class="butAction">Appliquer le PMP</a>';
 				 }
-				
-				if ($view['can_validate'] == 1) { */?><!--
-					<a href="javascript:;" onclick="javascript:if (!confirm('Confirmez-vous la régulation ?')) return false; else document.location.href='<?php /*echo $view['url']; */?>?id=<?php /*echo $inventoryTPL['id']; */?>&action=regulate&token=<?php /*echo $view['token']; */?>'; " class="butAction">Réguler le stock</a>
-				--><?php /*}*/ ?>
+*/
+				if ($view['can_validate'] == 1) { ?>
+					<a href="javascript:;" onclick="javascript:if (!confirm('Confirmez-vous la régulation ?')) return false; else document.location.href='<?php echo $view['url']; ?>?id=<?php echo $inventoryTPL['id']; ?>&action=regulate&token=<?php echo $view['token']; ?>'; " class="butAction">Réguler le stock</a>
+				<?php } ?>
 			<?php } ?>
 			<?php if ($view['mode'] == 'edit') { ?>
 				<input name="back" type="button" class="butAction" value="Quitter la saisie" onclick="document.location='?id=<?php echo $inventoryTPL['id']; ?>&action=view';" />
