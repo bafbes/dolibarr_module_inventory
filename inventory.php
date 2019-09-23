@@ -436,7 +436,15 @@ function _fiche_warehouse(&$PDOdb, &$user, &$db, &$conf, $langs, $inventory)
         
         <tr>
             <td><?php echo $langs->trans('inventorySelectWarehouse') ?></td>
-            <td><?php echo $formproduct->selectWarehouses('', 'fk_warehouse') ?></td> 
+            <td><?php
+
+                if(empty($conf->global->INVENTORY_USE_AUTOSELECT)) echo $formproduct->selectWarehouses('', 'fk_warehouse');
+                else {
+                    $htmlname='fk_warehouse';
+                    $urloption = "htmlname=$htmlname&XDEBUG_SESSION_START=PHPSTORM";
+                    print entrepot_ajax_autocompleter(GETPOST($htmlname), 1, $htmlname, dol_buildpath('/inventory/ajax/entrepots.php', 1), $urloption, 2, 1, array());
+                }
+                ?></td>
         </tr>
 <!--
         <tr>
