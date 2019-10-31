@@ -446,31 +446,31 @@ function _fiche_warehouse(&$PDOdb, &$user, &$db, &$conf, $langs, $inventory)
                 }
                 ?></td>
         </tr>
-<!--
+<?php if(empty($conf->global->INVENTORY_SIMPLIFIEDINTERFACE)){?>
         <tr>
-            <td><?php /*echo $langs->trans('SelectCategory') */?></td>
-            <td><?php /*echo $formDoli->select_all_categories(0,'', 'fk_category[]') */?></td>
+            <td><?php echo $langs->trans('SelectCategory') ?></td>
+            <td><?php echo $formDoli->select_all_categories(0,'', 'fk_category[]') ?></td>
         </tr>
         <tr>
-            <td><?php /*echo $langs->trans('SelectFournisseur') */?></td>
-            <td><?php /*echo $formDoli->select_company('','fk_supplier','s.fournisseur = 1', 1) */?></td>
+            <td><?php echo $langs->trans('SelectFournisseur') ?></td>
+            <td><?php echo $formDoli->select_company('','fk_supplier','s.fournisseur = 1', 1) ?></td>
         </tr>
         <tr>
-            <td><?php /*echo $langs->trans('OnlyProdsInStock') */?></td>
+            <td><?php echo $langs->trans('OnlyProdsInStock') ?></td>
             <td><input type="checkbox" name="OnlyProdsInStock" value="1"></td>
         </tr>
 
         <tr>
-            <td><?php /*echo $langs->trans('IncludeProdWithCurrentStockValue') */?></td>
+            <td><?php echo $langs->trans('IncludeProdWithCurrentStockValue') ?></td>
             <td><input type="checkbox" name="includeWithStockPMP" value="1"></td>
         </tr>
-        <?php /*if($conf->productbatch->enabled)  { */?>
+        <?php if($conf->productbatch->enabled)  { ?>
         <tr>
-            <td><?php /*echo $langs->trans('InventoryWithBatchDetail') */?></td>
+            <td><?php echo $langs->trans('InventoryWithBatchDetail') ?></td>
             <td><input type="checkbox" name="inventoryWithBatchDetail" value="1"></td>
         </tr>
-        --><?php /*} */?>
-
+        <?php } ?>
+<?php } ?>
     </table>
     <?php
     
