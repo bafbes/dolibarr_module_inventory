@@ -85,50 +85,50 @@ function _action()
 			$inventoryWithBatchDetail = (int)GETPOST('inventoryWithBatchDetail');
 			$inventory->per_batch = $inventoryWithBatchDetail;
 
-			
-			$e = new Entrepot($db);
-			$e->fetch($fk_warehouse);
-			$TChildWarehouses = array($fk_warehouse);
-			if(method_exists($e, 'get_children_warehouses')) $e->get_children_warehouses($fk_warehouse, $TChildWarehouses);
 
-/*			$sql = 'SELECT p.rowid AS fk_product, sm.fk_entrepot, SUM(sm.value) AS qty';
-			$sql.= ' FROM '.MAIN_DB_PREFIX.'product p';
-			$sql.= ' LEFT JOIN '.MAIN_DB_PREFIX.'product_stock ps ON (p.rowid = ps.fk_product)';
-			$sql.= ' INNER JOIN '.MAIN_DB_PREFIX.'stock_mouvement sm ON (p.rowid = sm.fk_product)';
-			$sql.= ' LEFT JOIN '.MAIN_DB_PREFIX.'categorie_product cp ON (cp.fk_product = p.rowid)';
-			$sql.= ' LEFT JOIN '.MAIN_DB_PREFIX.'product_fournisseur_price pfp ON (pfp.fk_product = p.rowid)';
-			$sql.= ' WHERE sm.fk_entrepot IN ('.implode(', ', $TChildWarehouses).')';
-			if (is_array($fk_category) && !empty($fk_category)) $sql.= ' AND cp.fk_categorie IN ('.implode(',',$fk_category).')';
-			if ($fk_supplier > 0) $sql.= ' AND pfp.fk_soc = '.$fk_supplier;
+            $e = new Entrepot($db);
+            $e->fetch($fk_warehouse);
+            $TChildWarehouses = array($fk_warehouse);
+            if (method_exists($e, 'get_children_warehouses')) $e->get_children_warehouses($fk_warehouse, $TChildWarehouses);
+            if (empty($conf->global->INVENTORY_EMPTYFIRSTLISTOFPRODUCTS)) {
+                $sql = 'SELECT p.rowid AS fk_product, sm.fk_entrepot, SUM(sm.value) AS qty';
+                $sql .= ' FROM ' . MAIN_DB_PREFIX . 'product p';
+                $sql .= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'product_stock ps ON (p.rowid = ps.fk_product)';
+                $sql .= ' INNER JOIN ' . MAIN_DB_PREFIX . 'stock_mouvement sm ON (p.rowid = sm.fk_product)';
+                $sql .= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'categorie_product cp ON (cp.fk_product = p.rowid)';
+                $sql .= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'product_fournisseur_price pfp ON (pfp.fk_product = p.rowid)';
+                $sql .= ' WHERE sm.fk_entrepot IN (' . implode(', ', $TChildWarehouses) . ')';
+                if (is_array($fk_category) && !empty($fk_category)) $sql .= ' AND cp.fk_categorie IN (' . implode(',', $fk_category) . ')';
+                if ($fk_supplier > 0) $sql .= ' AND pfp.fk_soc = ' . $fk_supplier;
 
-			$parameters=array('fk_category'=>$fk_category, 'fk_supplier' => $fk_supplier, 'only_prods_in_stock' => $only_prods_in_stock);
-			$reshook=$hookmanager->executeHooks('printFieldListWhere',$parameters,$inventory,$action);    // Note that $action and $object may have been modified by some hooks
-			if ($reshook < 0) setEventMessages($hookmanager->error, $hookmanager->errors, 'errors');
-			else $sql.=$hookmanager->resPrint;
+                $parameters = array('fk_category' => $fk_category, 'fk_supplier' => $fk_supplier, 'only_prods_in_stock' => $only_prods_in_stock);
+                $reshook = $hookmanager->executeHooks('printFieldListWhere', $parameters, $inventory, $action);    // Note that $action and $object may have been modified by some hooks
+                if ($reshook < 0) setEventMessages($hookmanager->error, $hookmanager->errors, 'errors');
+                else $sql .= $hookmanager->resPrint;
 
-			$sql.= ' GROUP BY p.rowid, sm.fk_entrepot';
+                $sql .= ' GROUP BY p.rowid, sm.fk_entrepot';
 
-			if ($only_prods_in_stock > 0) $sql.= ' HAVING qty > 0';
+                if ($only_prods_in_stock > 0) $sql .= ' HAVING qty > 0';
 
-			$sql.= ' ORDER BY p.ref ASC, p.label ASC';
-                 
-			$Tab = $PDOdb->ExecuteAsArray($sql);
-			
-			foreach($Tab as &$row) {
-			
-                $inventory->add_product($PDOdb, $row->fk_product, $row->fk_entrepot, GETPOST('includeWithStockPMP')!='' );
-                $product = new Product($db);
-                $product->fetch($row->fk_product);
-                if($inventoryWithBatchDetail && $product->hasbatch()) $inventory->add_batch($PDOdb, $row->fk_product, $row->fk_entrepot, $inventory->get_date('date_inventory', 'Y-m-d'), GETPOST('includeWithStockPMP')!='' );
-			}
-			
-			$inventory->save($PDOdb);*/
-			
-			header('Location: '.dol_buildpath('inventory/inventory.php?id='.$inventory->getId().'&action=edit', 1));
-		
-		case 'view':
-		case 'edit':
-			if (!$user->rights->inventory->write) accessforbidden();
+                $sql .= ' ORDER BY p.ref ASC, p.label ASC';
+
+                $Tab = $PDOdb->ExecuteAsArray($sql);
+
+                foreach ($Tab as &$row) {
+
+                    $inventory->add_product($PDOdb, $row->fk_product, $row->fk_entrepot, GETPOST('includeWithStockPMP') != '');
+                    $product = new Product($db);
+                    $product->fetch($row->fk_product);
+                    if ($inventoryWithBatchDetail && $product->hasbatch()) $inventory->add_batch($PDOdb, $row->fk_product, $row->fk_entrepot, $inventory->get_date('date_inventory', 'Y-m-d'), GETPOST('includeWithStockPMP') != '');
+                }
+
+                $inventory->save($PDOdb);
+            }
+            header('Location: ' . dol_buildpath('inventory/inventory.php?id=' . $inventory->getId() . '&action=edit', 1));
+
+        case 'view':
+        case 'edit':
+            if (!$user->rights->inventory->write) accessforbidden();
 			
 			$PDOdb = new TPDOdb;
 			$id = __get('id', 0, 'int');
