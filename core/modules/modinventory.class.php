@@ -246,7 +246,22 @@ class modinventory extends DolibarrModules
         //							'perms'=>'1',			                // Use 'perms'=>'$user->rights->inventory->level1->level2' if you want your menu with a permission rules
         //							'target'=>'',
         //							'user'=>2);				                // 0=Menu for internal users, 1=external users, 2=both
-        $r=1;
+        // $r++;
+        $this->menu[$r]=array('fk_menu'=>'fk_mainmenu=products,fk_leftmenu=stock',		                // Put 0 if this is a top menu
+            'type'=>'left',			                // This is a Top menu entry
+            'titre'=>'inventoryListTitle',
+            'mainmenu'=>'inventory',
+            'titre'=>'Liste des inventaires',
+            'mainmenu'=>'products',
+            'leftmenu'=>'inventory',
+            'url'=>'/inventory/inventory.php?action=list',
+            'langs'=>'inventory@inventory',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'position'=>100,
+            'enabled'=>'$conf->inventory->enabled && empty($conf->global->INVENTORY_SIMPLIFIEDINTERFACE)',	// Define condition to show or hide menu entry. Use '$conf->inventory->enabled' if entry must be visible if module is enabled.
+            'perms'=>'$user->rights->inventory->read',			                // Use 'perms'=>'$user->rights->inventory->level1->level2' if you want your menu with a permission rules
+            'target'=>'',
+            'user'=>2);				                // 0=Menu for internal users, 1=external users, 2=both
+        $r++;
         $this->menu[$r]=array(	'fk_menu'=>'fk_mainmenu=products',			                // Put 0 if this is a top menu
             'type'=>'left',			                // This is a Top menu entry
             'titre'=>'inventoryListTitle',
@@ -257,8 +272,24 @@ class modinventory extends DolibarrModules
             'url'=>'/inventory/inventory.php?action=list',
             'langs'=>'inventory@inventory',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'position'=>100,
-            'enabled'=>'$conf->inventory->enabled',	// Define condition to show or hide menu entry. Use '$conf->inventory->enabled' if entry must be visible if module is enabled.
+            'enabled'=>'$conf->inventory->enabled && !empty($conf->global->INVENTORY_SIMPLIFIEDINTERFACE)',	// Define condition to show or hide menu entry. Use '$conf->inventory->enabled' if entry must be visible if module is enabled.
             'perms'=>'$user->rights->inventory->read',			                // Use 'perms'=>'$user->rights->inventory->level1->level2' if you want your menu with a permission rules
+            'target'=>'',
+            'user'=>2);				                // 0=Menu for internal users, 1=external users, 2=both
+        $r++;
+        $this->menu[$r]=array(	'fk_menu'=>'fk_mainmenu=products,fk_leftmenu=stock',			                // Put 0 if this is a top menu
+            'type'=>'left',			                // This is a Top menu entry
+
+            'titre'=>'inventoryCreate',
+            'mainmenu'=>'products',
+            'titre'=>'Nouvel inventaire',
+            'mainmenu'=>'inventory',
+            'leftmenu'=>'inventory',
+            'url'=>'/inventory/inventory.php?action=create',
+            'langs'=>'inventory@inventory',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'position'=>100,
+            'enabled'=>'$conf->inventory->enabled && empty($conf->global->INVENTORY_SIMPLIFIEDINTERFACE)',	// Define condition to show or hide menu entry. Use '$conf->inventory->enabled' if entry must be visible if module is enabled.
+            'perms'=>'$user->rights->inventory->create',			                // Use 'perms'=>'$user->rights->inventory->level1->level2' if you want your menu with a permission rules
             'target'=>'',
             'user'=>2);				                // 0=Menu for internal users, 1=external users, 2=both
         $r++;
@@ -273,7 +304,7 @@ class modinventory extends DolibarrModules
             'url'=>'/inventory/inventory.php?action=create',
             'langs'=>'inventory@inventory',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'position'=>100,
-            'enabled'=>'$conf->inventory->enabled',	// Define condition to show or hide menu entry. Use '$conf->inventory->enabled' if entry must be visible if module is enabled.
+            'enabled'=>'$conf->inventory->enabled && !empty($conf->global->INVENTORY_SIMPLIFIEDINTERFACE)',	// Define condition to show or hide menu entry. Use '$conf->inventory->enabled' if entry must be visible if module is enabled.
             'perms'=>'$user->rights->inventory->create',			                // Use 'perms'=>'$user->rights->inventory->level1->level2' if you want your menu with a permission rules
             'target'=>'',
             'user'=>2);				                // 0=Menu for internal users, 1=external users, 2=both
