@@ -861,88 +861,94 @@ function _footerList($view,$total_pmp,$total_pmp_actual,$total_pa,$total_pa_actu
         </tr>
         <?php } 
 }
-function _headerList($view) {
-    global $conf,$user,$langs;
-	
-	?>
-			<tr style="background-color:#dedede;">
-				<th align="left" width="20%">&nbsp;&nbsp;Produit</th>
-				<th align="center">Entrepôt</th>
-				<?php if (! empty($conf->barcode->enabled)) { ?>
-					<th align="center">Code-barre</td>
-				<?php } ?>
-<!--				<?php /*if ($view['can_validate'] == 1) { */?>
-					<?php /*if($view['per_batch']) {*/?>
-						<th align="center">N° de lots</th>
-					<?php /*} */?>
-					<th align="center" width="20%">Quantité théorique</th>
-					<?php
-/*	                 if(!empty($conf->global->INVENTORY_USE_MIN_PA_IF_NO_LAST_PA)){
-	              		echo '<th align="center" width="20%" colspan="3">Valeur théorique</th>';   	
-					 }
-					 else {
-					 	echo '<th align="center" width="20%" colspan="2">Valeur théorique</th>';
-					 }
-					 
-					*/?>
-					
-				<?php /*} */?>
--->
-                    <th align="center" width="20%">Quantité réelle</th>
-<!--				<?php /*if ($view['can_validate'] == 1) { */?>
-				    
-				    <?php
-/*
-				     $colspan = 2;
-					 if(!empty($conf->global->INVENTORY_USE_MIN_PA_IF_NO_LAST_PA)) $colspan++;
-				     if(!empty($conf->global->INVENTORY_USE_MIN_PA_IF_NO_LAST_PA)) $colspan++;
-					
-	                 echo '<th align="center" width="20%" colspan="'.$colspan.'">Valeur réelle</th>';
-					 
-					*/?>
-						
-					<th align="center" width="15%">Quantité régulée</th>
-				<?php /*} */?>
-				<?php /*if ($view['is_already_validate'] != 1) { */?>
-					<th align="center" width="5%">#</th>
-				<?php /*} */?>
--->				<th align="center" width="5%"></th>
 
-			</tr>
-			<?php if ($view['can_validate'] == 1) { ?>
-	    	<tr style="background-color:#dedede;">
-<!--	    		<?php /*$colspan = empty($conf->barcode->enabled) ? 3 : 4;  */?>
-	    		<?php /*if(!empty($conf->productbatch->enabled)) $colspan++;  */?>
-	    	    <th colspan="<?php /*echo $colspan;  */?>">&nbsp;</th>
-	    	    <th>PMP<?php /*if(!empty($conf->global->INVENTORY_USE_MIN_PA_OR_LAST_PA_MIN_PMP_IS_NULL)) echo img_info($langs->trans('UsePAifnull')); */?></th>
-	    	    <th>Dernier PA</th>
-	    	    <?php
-/*	                 if(!empty($conf->global->INVENTORY_USE_MIN_PA_IF_NO_LAST_PA)){
-	              		echo '<th>PA courant</th>';
-					 }
+function _headerList($view)
+{
+    global $conf, $user, $langs;
 
-				*/?>
-	    	    <th>&nbsp;</th>
-	    	    <th>PMP<?php /*if(!empty($conf->global->INVENTORY_USE_MIN_PA_OR_LAST_PA_MIN_PMP_IS_NULL)) echo img_info($langs->trans('UsePAifnull')); */?></th>
-	    	    <?php
-/*	    	    if(!empty($user->rights->inventory->changePMP)) {
-	    	    	echo '<th rel="newPMP">'.$langs->trans('ColumnNewPMP').'</th>';
-	    	    }
-	    	    */?>
-	            <th>Dernier PA</th>
-	            <?php
-/*	                 if(!empty($conf->global->INVENTORY_USE_MIN_PA_IF_NO_LAST_PA)){
-	              		echo '<th>PA courant</th>';
-					 }
+    ?>
+    <tr style="background-color:#dedede;">
+        <th align="left" width="20%">&nbsp;&nbsp;Produit</th>
+        <th align="center">Entrepôt</th>
+        <?php if (!empty($conf->barcode->enabled)) { ?>
+            <th align="center">Code-barre</th>
+        <?php } ?>
+        <?php if (empty($conf->global->INVENTORY_SIMPLIFIEDINTERFACE)) { ?>
 
-				*/?>
-	            <th>&nbsp;</th>
--->	            <?php if ($view['is_already_validate'] != 1) { ?>
-<!--	            <th>&nbsp;</th>-->
-	            <?php } ?>
-	    	</tr>
-	    	<?php 
-	} 
-	
+            <?php if ($view['can_validate'] == 1) { ?>
+                <?php if ($view['per_batch']) { ?>
+                    <th align="center">N° de lots</th>
+                <?php } ?>
+                <th align="center" width="20%">Quantité théorique</th>
+                <?php
+                if (!empty($conf->global->INVENTORY_USE_MIN_PA_IF_NO_LAST_PA)) {
+                    echo '<th align="center" width="20%" colspan="3">Valeur théorique</th>';
+                }
+                else {
+                    echo '<th align="center" width="20%" colspan="2">Valeur théorique</th>';
+                }
+                ?>
+            <?php } ?>
+        <?php } ?>
+
+        <th align="center" width="20%">Quantité réelle</th>
+        <?php if (empty($conf->global->INVENTORY_SIMPLIFIEDINTERFACE)) { ?>
+            <?php if ($view['can_validate'] == 1) { ?>
+
+                <?php
+                $colspan = 2;
+                if (!empty($conf->global->INVENTORY_USE_MIN_PA_IF_NO_LAST_PA)) $colspan++;
+                if (!empty($conf->global->INVENTORY_USE_MIN_PA_IF_NO_LAST_PA)) $colspan++;
+                echo '<th align="center" width="20%" colspan="' . $colspan . '">Valeur réelle</th>';
+                ?>
+                <th align="center" width="15%">Quantité régulée</th>
+            <?php } ?>
+            <?php if ($view['is_already_validate'] != 1) { ?>
+                <th align="center" width="5%">#</th>
+            <?php } ?>
+        <?php } ?>
+        <th align="center" width="5%"></th>
+
+    </tr>
+    <?php if ($view['can_validate'] == 1) { ?>
+    <tr style="background-color:#dedede;">
+        <?php if (empty($conf->global->INVENTORY_SIMPLIFIEDINTERFACE)) { ?>
+            <?php $colspan = empty($conf->barcode->enabled) ? 3 : 4; ?>
+            <?php if (!empty($conf->productbatch->enabled)) $colspan++; ?>
+            <th colspan="<?php echo $colspan;   ?>">&nbsp;</th>
+            <th>
+                PMP<?php if (!empty($conf->global->INVENTORY_USE_MIN_PA_OR_LAST_PA_MIN_PMP_IS_NULL)) echo img_info($langs->trans('UsePAifnull')); ?></th>
+            <th>Dernier PA</th>
+            <?php
+            if (!empty($conf->global->INVENTORY_USE_MIN_PA_IF_NO_LAST_PA)) {
+                echo '<th>PA courant</th>';
+            }
+
+            ?>
+            <th>&nbsp;</th>
+            <th>
+                PMP<?php if (!empty($conf->global->INVENTORY_USE_MIN_PA_OR_LAST_PA_MIN_PMP_IS_NULL)) echo img_info($langs->trans('UsePAifnull')); ?></th>
+            <?php
+            if (!empty($user->rights->inventory->changePMP)) {
+                echo '<th rel="newPMP">' . $langs->trans('ColumnNewPMP') . '</th>';
+            }
+            ?>
+            <th>Dernier PA</th>
+            <?php
+            if (!empty($conf->global->INVENTORY_USE_MIN_PA_IF_NO_LAST_PA)) {
+                echo '<th>PA courant</th>';
+            }
+
+            ?>
+            <th>&nbsp;</th>
+        <?php } ?>
+
+        <?php if ($view['is_already_validate'] != 1 && empty($conf->global->INVENTORY_SIMPLIFIEDINTERFACE)) { ?>
+            <th>&nbsp;</th>
+        <?php } ?>
+    </tr>
+    <?php
+}
+
 }
 
