@@ -321,7 +321,7 @@
 	
 	<?php if ($view['is_already_validate'] != 1) { ?>
 		<div class="tabsAction" style="height:30px;">
-			<?php if ($view['mode'] == 'view') { ?>
+			<?php if ($view['mode'] == 'view' && !empty($user->rights->inventory->modify)) { ?>
 <!--				<a href="<?php /*echo $view['url']; */?>?id=<?php /*echo $inventoryTPL['id']; */?>&action=printDoc" class="butAction">Imprimer</a>
 				<a href="<?php /*echo $view['url']; */?>?id=<?php /*echo $inventoryTPL['id']; */?>&action=exportCSV" class="butAction">Export CSV</a>
 -->				<a href="<?php echo $view['url']; ?>?id=<?php echo $inventoryTPL['id']; ?>&action=edit" class="butAction">Modifier</a>
@@ -339,11 +339,17 @@
 			<?php if ($view['mode'] == 'edit') { ?>
 				<input name="back" type="button" class="butAction" value="Quitter la saisie" onclick="document.location='?id=<?php echo $inventoryTPL['id']; ?>&action=view';" />
 			<?php } ?>
-			<?php if ($view['can_validate'] == 1) { ?>
-                <a onclick="if (!confirm('Confirmez-vous la vidange ?')) return false;" href="<?php echo $view['url']; ?>?id=<?php echo $inventoryTPL['id']; ?>&action=flush" class="butActionDelete">Vider</a>
+			<?php if ( $view['can_validate'] == 1 && !empty($user->rights->inventory->modify)) { ?>
+                <a onclick="if (!confirm('Confirmez-vous la vidange ?')) return false;"
+                   href="<?php echo $view['url']; ?>?id=<?php echo $inventoryTPL['id']; ?>&action=flush"
+                   class="butActionDelete">Vider</a>
                 &nbsp;&nbsp;&nbsp;
-                <a onclick="if (!confirm('Confirmez-vous la suppression ?')) return false;" href="<?php echo $view['url']; ?>?id=<?php echo $inventoryTPL['id']; ?>&action=delete" class="butActionDelete">Supprimer</a>
-        	<?php } ?>
+                <?php if (!empty($user->rights->inventory->delete)) { ?>
+                    <a onclick="if (!confirm('Confirmez-vous la suppression ?')) return false;"
+                       href="<?php echo $view['url']; ?>?id=<?php echo $inventoryTPL['id']; ?>&action=delete"
+                       class="butActionDelete">Supprimer</a>
+                <?php } ?>
+            <?php } ?>
 		</div>
 	<?php } ?>
 	<?php if ($view['is_already_validate'] == 1) { ?>

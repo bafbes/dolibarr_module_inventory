@@ -127,6 +127,17 @@ function _action()
             header('Location: ' . dol_buildpath('inventory/inventory.php?id=' . $inventory->getId() . '&action=edit', 1));
 
         case 'view':
+            if (!$user->rights->inventory->read) accessforbidden();
+
+			$PDOdb = new TPDOdb;
+			$id = __get('id', 0, 'int');
+
+			$inventory = new TInventory;
+			$inventory->load($PDOdb, $id);
+
+			_fiche($PDOdb, $user, $db, $conf, $langs, $inventory, __get('action', 'view', 'string'));
+
+			break;
         case 'edit':
             if (!$user->rights->inventory->write) accessforbidden();
 			
